@@ -1,0 +1,119 @@
+header {
+    margin: 0;
+}
+
+.navig * {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.navig > ul {
+    list-style: none;  
+    text-transform: uppercase; 
+    text-align:  center; 
+    background: #5a6c8f;
+}
+
+.navig ul {
+    list-style: none;  
+}
+
+.navig ul li {
+    margin: 0 5%; 
+}
+
+.navig > ul {
+    display: flex;
+    justify-content: left;
+}
+
+.navig > ul li a {
+    text-decoration: none;
+    display: block;
+    background: #5f6c8f;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    /*border-radius: 5em;*/
+    box-shadow: 1px 3px 10px 1px black;
+    padding: 2px 10px;
+    /*color: #454547;*/
+    color: #fff;
+    text-shadow: 1px 1px 3px black;
+    transition: all .3s ease;
+}
+
+.navig > ul li a:hover {
+    background: #454547;
+    color: #fff;    
+    text-shadow: 1px 1px 5px silver;
+    box-shadow: 1px 5px 10px 1px black;
+    transition: all .3s ease;
+}
+
+.navig > ul li {
+    position: relative;
+}
+
+.navig li ul {
+    position: absolute;
+    min-width: 150px;
+    display: none;
+    z-index: 3;
+}
+
+.navig li ul > li {   
+    text-align: center;
+}
+
+.navig li > ul li a {
+    padding: 10px;
+    text-transform: none;
+    /*background: #e4e4e5;*/
+    text-shadow: 1px 1px 3px black;
+}
+
+.navig li > ul li ul {
+    position: absolute;
+    right: -95%;
+    top: 2px;
+    text-transform: none;
+    cursor: pointer;    
+    height: 300px;
+    overflow: auto;
+}
+
+li.cont1 ul.country{	
+    cursor: pointer;    
+    height: 300px;
+    overflow: scroll;
+}
+
+.navig li > ul li ul li {
+    /*border: 1px solid black;*/
+    background: #5f6c8f;
+    color: #fff;    
+    text-shadow: 1px 1px 3px black;
+    padding: 10px;
+    /*border-radius: 5em;*/
+    width: 80%;    
+    box-shadow: 1px 3px 10px 1px black;
+}
+
+.navig li > ul li ul li:hover {
+    background: #454547;
+    color: #fff;    
+    text-shadow: 1px 1px 1px silver;
+}
+
+.navig li:hover > ul {
+    display: block;
+}
+
+.navig > ul > li > ul > li {
+    left: 0;
+}
+
+#myBtn {
+    display: none;
+}

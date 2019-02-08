@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<script>
+
+		function User(forename, surname, password) {
+			this.forename = forename;
+			this.surname = surname;
+			this.password = password;
+
+			this.showUser = function() {
+				document.write("Name: " + this.forename + "<br>");
+				document.write("User name: " + this.surname + "<br>");
+				document.write("Password: " + this.password + "<br>");
+			}
+		}
+		//details = new User( prompt("Enter name:", "your name"), prompt("Enter surname:", "admin"), prompt("Enter password:", "password") );
+		//details.showUser();
+
+		checkerboard = Array(
+			Array('o', ' ', 'o', ' ', 'o', ' ', 'o' ),
+			Array(' ', '0', ' ', '0', ' ', '0', ' ' ),
+			Array('o', ' ', 'o', ' ', 'o', ' ', 'o' ),
+			Array(' ', '0', ' ', '0', ' ', '0', ' ' ),
+			Array('o', ' ', 'o', ' ', 'o', ' ', 'o' ),
+			Array(' ', '0', ' ', '0', ' ', '0', ' ' ),
+			Array('o', ' ', 'o', ' ', 'o', ' ', 'o' ) );
+
+
+		document.write("<pre>");
+		for (i = 0; i < 7; ++i) {
+			for (j = 0; j < 7; ++j) {
+				document.write(checkerboard[i][j] + " ");
+			}
+			document.write("<br>");
+		}		
+		document.write("</pre>");
+
+	</script>
+
+	<h1 style="font-size: 14em; background: url(img/flags/by.png) repeat; text-align: center; margin: 0 auto">Testing script</h1>	
+	
+	<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+</body>
+</html>

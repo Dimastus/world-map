@@ -1,0 +1,71 @@
+body {
+    /*padding-top: 40px;
+  padding-bottom: 40px;*/
+    background-color: #eee;
+}
+
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+    padding: 15px;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    font-size: 16px;
+
+    position: relative;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type='email'] {
+    margin-bottom: -1px;
+
+    -webkit-border-bottom-right-radius: 0;
+            border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+            border-bottom-left-radius: 0;
+}
+.form-signin input[type='password'] {
+    margin-bottom: 10px;
+
+    -webkit-border-top-left-radius: 0;
+            border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+            border-top-right-radius: 0;
+}
+
+.skrit {
+    display: none;
+}
+
+.myModal {
+    overflow-y: auto;
+
+    height: 60vh;
+}
+/*for new_admin*/
+.table__li_hover span:hover {
+    cursor: pointer;
+    -webkit-transition: text-shadow .4s;
+       -moz-transition: text-shadow .4s;
+         -o-transition: text-shadow .4s;
+            transition: text-shadow .4s;
+
+    border-bottom: 3px solid #ffc107;
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    text-shadow: 1px 1px 1px #ffc107, 0 7px 3px rgba(255, 193, 7, .63);
+}
