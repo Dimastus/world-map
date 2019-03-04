@@ -219,4 +219,20 @@
 
 	}
 
+	//обновление дынных о стране
+	if(isset($_POST['updateDataCountry'])) {
+
+		echo "updateDataCountry";
+		print_r($_POST);
+
+	}
+
+	//обновление дынных о должностных лицах
+	if(isset($_POST['updateDataPerson'])) {
+
+		echo "updateDataPerson";
+		print_r($_POST);
+
+	}
+
 ?>

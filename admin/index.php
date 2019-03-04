@@ -317,7 +317,7 @@ _END;
                     <div class="card card-body">
                       <textarea name='user[$row2[0]][reference_info]' class="form-control mytextarea" aria-label="With textarea" placeholder="Информация" rows="8">$reference_info</textarea>
                     </div>
-                  <div>
+                  </div>
                 </td>
               </tr>
 _END;

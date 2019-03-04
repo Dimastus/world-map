@@ -13,7 +13,8 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap/css/signin.css">
 
 	<script>
-		function universe__function(i){
+		//script with name of the country
+		/*function universe__function(i){
 			jQuery.noConflict();
 			jQuery(function(){
 				var $ = jQuery;
@@ -27,8 +28,10 @@
 					}
 				});
 			});
-		};
-		function requestData(i){
+		};*/
+
+		//script for form added country
+		/*function requestData(i){
 			jQuery.noConflict();
 			jQuery(function(){
 				var $ = jQuery;
@@ -42,6 +45,27 @@
 					}
 				});
 			});
+		};*/
+
+		//script for modal window in file select_data.php
+		function sendData(fileName, countryName, whatThis, whatThisId, way){
+			jQuery.noConflict();
+			jQuery(function(){
+				var $ = jQuery;
+				$.ajax({
+					url: "catalog/" + fileName,
+					type: 'POST',
+					data: {
+						nameCountry: countryName,
+						what_this: whatThis,
+						what_this_id: whatThisId					
+					},
+					async: false,
+					success: function(html){
+						$("." + way).html(html);
+					}
+				});
+			});
 		};
 	</script>
 </head>
@@ -52,24 +76,24 @@
 		if ($_SESSION['login']==''){
 			echo <<<_END
 			<div class="container-fluid">
-			  <form action="../php-script/testreg.php" method="post" class="form-signin">
-			    <h2 class="form-signin-heading">Панель администратора</h2>
-			    <p>
-			      <label for="inputLogin" class="sr-only">Ваш логин:</label>
-			      <input id="inputLogin" name="login" type="text" size="15" maxlength="15" placeholder="Login" class="form-control" required="required">
-			    </p>
-			    <p>
-			      <label for="inputPassword" class="sr-only">Ваш пароль:</label>
-			      <input id="inputPassword" name="password" type="password" size="15" maxlength="15" placeholder="Password" class="form-control" required="required">
-			    </p>
-			    <p>
-			      <input type="submit" name="submit" value="Войти" class="btn btn-lg btn-primary btn-block">
-			      <br>
-			      <a href="../php-script/registration.php" class="btn btn-lg btn-danger btn-block">Зарегистрироваться</a>
-			      <br>
-			      <a href="/" class="btn btn-sm btn-secondary btn-block" target="_blank">Перейти на сайт</a>
-			    </p>
-			  </form>
+				<form action="../php-script/testreg.php" method="post" class="form-signin">
+					<h2 class="form-signin-heading">Панель администратора</h2>
+					<p>
+						<label for="inputLogin" class="sr-only">Ваш логин:</label>
+						<input id="inputLogin" name="login" type="text" size="15" maxlength="15" placeholder="Login" class="form-control" required="required">
+					</p>
+					<p>
+						<label for="inputPassword" class="sr-only">Ваш пароль:</label>
+						<input id="inputPassword" name="password" type="password" size="15" maxlength="15" placeholder="Password" class="form-control" required="required">
+					</p>
+					<p>
+						<input type="submit" name="submit" value="Войти" class="btn btn-lg btn-primary btn-block">
+						<br>
+						<a href="../php-script/registration.php" class="btn btn-lg btn-danger btn-block">Зарегистрироваться</a>
+						<br>
+						<a href="/" class="btn btn-sm btn-secondary btn-block" target="_blank">Перейти на сайт</a>
+					</p>
+				</form>
 			</div>
 _END;
 		}
@@ -100,9 +124,14 @@ _END;
 							<span class='navbar-text'>
 								Добро пожаловать, <strong class='text-white'>" . $myrow['login'] . "</strong>
 							</span>
-							<form action='../php-script/session_destroy.php' method='post' class='form-inline d-flex justify-content-end'>
-								<input type='submit' name='destroy' class='btn btn-warning btn-sm' value='Выход'>
-							</form>
+							<div class='d-flex'>
+								<form action='../php-script/' method='post' class='form-inline'>
+									<input type='button' name='editPassword' class='form-inline btn btn-warning btn-sm' value='Изменить пароль'>
+								</form>
+								<form action='../php-script/session_destroy.php' method='post' class='form-inline ml-2'>
+									<input type='submit' name='destroy' class='btn btn-warning btn-sm' value='Выход'>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>";
@@ -132,22 +161,32 @@ _END;
 							        		$result_country -> data_seek($m);
 							        		$row_country = $result_country -> fetch_array(MYSQLI_NUM);
 							        		// print_r($row_country);
-							        		echo "<li class='my-2 table__li_hover' onclick='universe__function(\"$row_country[0]\")'><span>" . $row_country[0] . "</span></li>";
+
+							        		$whenSend = "'select_data.php'";
+							        		$nameCountry = "'$row_country[0]'";
+							        		$waySendNameCountry = "'info-box'";
+
+							        		echo '<li class="my-2 table__li_hover" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
+															    //sendData(fileName, countryName, whatThis, whatThisId, way)
 							        	}
 							        }
 							        echo "</div></ol>";
 							    }
 //------------------------------------------------------------------------------------------------------------------------
-							    $addcountry = "'addform.php'";
+							    $addCountry = "'addform.php'";
+							    $way = "'info-box'";
+
 							    echo '
 							    </ul>
 							    <p>
-								    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5" onclick="requestData(' . $addcountry . ')">
+								    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5" onclick="sendData(' . $addCountry . ', null, null, null, ' . $way . ')">
 							    </p>';
 //------------------------------------------------------------------------------------------------------------------------
+							    $tableCountry = "'table_users.php'";
+
 							    echo '
 							    <p>
-								    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1">
+								    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1" onclick="sendData(' . $tableCountry . ', null, null, null, ' . $way . ')">
 							    </p>
 						    </div>';
 
@@ -159,7 +198,7 @@ _END;
 			}
 		}
 	
-	?>	
+	?>		
   <script type="text/javascript" src="../css/bootstrap/js/jquery.min.js"></script>
   <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="../css/bootstrap/js/popper.min.js"></script>

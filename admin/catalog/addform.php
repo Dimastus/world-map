@@ -37,7 +37,7 @@
 							<a class="nav-link" id="person-tab" data-toggle="tab" href="#person" role="tab" aria-controls="person" aria-selected="false">Должностное лицо</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Вооружение</a>
+							<a class="nav-link disabled" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Вооружение</a>
 						</li>
 					</ul>
 					<form method="post" action="catalog/insert_to_db.php" enctype="multipart/form-data">
@@ -145,7 +145,7 @@
 
 							</div>
 							<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-								<div class="text-warning display-1 font-weight-bold">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit libero sunt rem eos, eum corporis reiciendis consectetur rerum ipsum. Ipsam tempore optio quis obcaecati similique nobis molestias doloremque facere! Perferendis quam, ut pariatur. Magni voluptas facilis in aut nisi perferendis possimus expedita aliquid voluptatem, rerum reiciendis iusto perspiciatis aspernatur excepturi deserunt velit animi ad. Cupiditate, at illo similique natus dolor vitae laudantium accusantium cumque itaque enim soluta sed! Quam facere ullam, quisquam illum. Obcaecati suscipit quis reiciendis esse, quia sunt amet doloremque voluptas, ad provident accusantium iusto optio tempore eos illo ab deserunt quas enim deleniti perspiciatis itaque velit quos.</div>
+								<div class="text-warning display-1 font-weight-bold">...</div>
 							</div>
 						</div>
 						<input type="submit" name="insertData" class="btn btn-success btn-lg float-right mr-5" value="Сохранить">
