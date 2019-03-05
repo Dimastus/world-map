@@ -73,7 +73,7 @@
 	<?php
 
 		mb_internal_encoding("UTF-8");
-		if ($_SESSION['login']==''){
+		if ($_SESSION['login'] == ''){
 			echo <<<_END
 			<div class="container-fluid">
 				<form action="../php-script/testreg.php" method="post" class="form-signin">
@@ -99,102 +99,149 @@ _END;
 		}
 		else {  
 
-			$way = "../php-script/";	//часть пути для подключения файлов
+			if($_SESSION['login'] == '') {
 
-		    // подключаемся к базе
-			require_once $way . 'data_to_db.php';
-			require_once $way . 'connect_to_db.php';
-			/*подключить файл с функциями для загрузки картинок*/
-			include_once $way . 'func_for_img.php';
-			/*подключить файл с "обезвреживанием"*/
-			require_once $way . 'protect.php';
+				echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
+				echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
 
-			$query = "SELECT * FROM table_users WHERE login='" . $_SESSION['login'] . "'";			
-			$result = $connection -> query($query); //извлекаем из базы все данные о пользователе с введенным логином
-			
-			if(!$result) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
-			$myrow = $result -> fetch_array(MYSQLI_ASSOC);
+			}
+			elseif ($_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2)) {
 
-		echo "	<div class='row bg-dark m-0 py-3'>
-					<div class='col-10 d-flex justify-content-center align-items-center'>
-						<a class='display-4 text-uppercase font-weight-bold text-white ml-5' href='new_admin.php'>Панель администратора</a>
-					</div>
-					<div class='col-2 d-flex justify-content-end pr-5'>
-						<div class='text-white'>
-							<span class='navbar-text'>
-								Добро пожаловать, <strong class='text-white'>" . $myrow['login'] . "</strong>
-							</span>
-							<div class='d-flex'>
-								<form action='../php-script/' method='post' class='form-inline'>
-									<input type='button' name='editPassword' class='form-inline btn btn-warning btn-sm' value='Изменить пароль'>
-								</form>
-								<form action='../php-script/session_destroy.php' method='post' class='form-inline ml-2'>
-									<input type='submit' name='destroy' class='btn btn-warning btn-sm' value='Выход'>
-								</form>
+				$way = "../php-script/";	//часть пути для подключения файлов
+
+			    // подключаемся к базе
+				require_once $way . 'data_to_db.php';
+				require_once $way . 'connect_to_db.php';
+				/*подключить файл с функциями для загрузки картинок*/
+				include_once $way . 'func_for_img.php';
+				/*подключить файл с "обезвреживанием"*/
+				require_once $way . 'protect.php';
+
+				$query = "SELECT * FROM table_users WHERE login='" . $_SESSION['login'] . "'";			
+				$result = $connection -> query($query); //извлекаем из базы все данные о пользователе с введенным логином
+				
+				if(!$result) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+				$myrow = $result -> fetch_array(MYSQLI_ASSOC);
+
+				$editPassword = '"modal_window.php"';
+				$wayEditPassword = '"editPassword-modal-box"';
+				$whatThisPassword = '"password"';
+
+				echo "<div class='row bg-dark m-0 py-3'>
+						<div class='col-10 d-flex justify-content-center align-items-center'>
+							<a class='display-4 text-uppercase font-weight-bold text-white ml-5' href='new_admin.php'>Панель администратора</a>
+						</div>
+						<div class='col-2 d-flex justify-content-end pr-5'>
+							<div class='text-white'>
+								<span class='navbar-text'>
+									Добро пожаловать, <strong class='text-white'>" . $myrow['login'] . "</strong>
+								</span>
+								<div class='d-flex'>
+									<form action='#' method='post' class='form-inline'>
+										<input type='button' name='editPassword' class='form-inline btn btn-warning btn-sm' value='Изменить пароль' onclick='sendData(" . $editPassword . ", null, " . $whatThisPassword . ", null, " . $wayEditPassword . ")'  data-toggle='modal' data-target='#modalEditPassword'>
+									</form>
+									<form action='../php-script/session_destroy.php' method='post' class='form-inline ml-2'>
+										<input type='submit' name='destroy' class='btn btn-warning btn-sm' value='Выход'>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>";
+
+				/* дерево стран, принадлежащие определенному пользователю */
+				$query_continent = "SELECT `table_country`.`continent_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' GROUP BY `table_country`.`continent_country`";
+				$result_continent = $connection -> query($query_continent);
+				if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+				else {
+						echo '<div class="row m-0">
+								<div class="col-2 bg-dark">
+									<div class="dropdown-divider"></div>
+									<ul class="nav flex-column text-white px-2">';
+						    		$rows_continent = $result_continent -> num_rows;
+									for($n = 0; $n < $rows_continent; ++$n){
+								        $result_continent -> data_seek($n);
+								        $row_continent = $result_continent -> fetch_array(MYSQLI_NUM);//получение отдельной строки таблицы
+								        // print_r($row_continent);
+								        echo "<li class='font-weight-bold'><button class='btn btn-secondary btn-sm btn-block my-1' type='button' data-toggle='collapse' data-target='#multiCollapseEx$n' aria-expanded='false' aria-controls='multiCollapseEx$n'>" . $row_continent[0] . "</button></li><ol>";
+										$query_country = "SELECT `table_country`.`name_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' AND `table_country`.`continent_country` = '" . $row_continent[0] . "' GROUP BY `table_country`.`name_country`";
+								        $result_country = $connection -> query($query_country);
+								        if(!$result_country) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+								        else {
+								        	echo "<div class='collapse multi-collapse' id='multiCollapseEx$n'>";
+								        	$rows_country = $result_country -> num_rows;
+								        	for($m=0; $m < $rows_country; $m++){ 
+								        		$result_country -> data_seek($m);
+								        		$row_country = $result_country -> fetch_array(MYSQLI_NUM);
+								        		// print_r($row_country);
+
+								        		$whenSend = "'select_data.php'";
+								        		$nameCountry = "'$row_country[0]'";
+								        		$waySendNameCountry = "'info-box'";
+
+								        		echo '<li class="my-2 table__li_hover" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
+								        	}
+								        }
+								        echo "</div></ol>";
+								    }
+
+								    $addCountry = "'addform.php'";
+								    $wayAddCountry = "'info-box'";
+
+								    echo '
+								    </ul>
+								    <p>
+									    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5" onclick="sendData(' . $addCountry . ', null, null, null, ' . $wayAddCountry . ')">
+								    </p>';
+
+								    if($myrow['id_role'] == 1){
+
+									    $tableCountry = "'table_users.php'";
+									    $wayTableCountry = "'info-box'";
+
+									    echo '
+									    <p>
+										    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1" onclick="sendData(' . $tableCountry . ', null, null, null, ' . $wayTableCountry . ')">
+									    </p>';
+									}
+
+					    echo '</div>
+						      <div class="col-10 p-0 d-flex justify-content-start">								    
+									<div class="info-box container-fluid p-0"></div>
+							  </div>
+						</div>';
+
+				}
+
+				echo '<!-- Modal -->
+				<div class="modal fade" id="modalEditPassword" tabindex="-1" role="dialog" aria-labelledby="modalEditPasswordLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header bg-secondary p-1 pl-3 m-0">
+								<h5 class="modal-title text-warning font-weight-bold" id="modalEditPasswordLabel">Окно редактирования</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="editPassword-modal-box"></div>
+							</div>
+							<div class="modal-footer bg-secondary p-1 m-0">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
 							</div>
 						</div>
 					</div>
-				</div>";
+				</div>';
 
-			/* дерево стран, принадлежащие определенному пользователю */
-			$query_continent = "SELECT `table_country`.`continent_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' GROUP BY `table_country`.`continent_country`";
-			$result_continent = $connection -> query($query_continent);
-			if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+			}
 			else {
-					echo '<div class="row m-0">
-							<div class="col-2 bg-dark">
-								<div class="dropdown-divider"></div>
-								<ul class="nav flex-column text-white px-2">';
-					    		$rows_continent = $result_continent -> num_rows;
-								for($n = 0; $n < $rows_continent; ++$n){
-							        $result_continent -> data_seek($n);
-							        $row_continent = $result_continent -> fetch_array(MYSQLI_NUM);//получение отдельной строки таблицы
-							        // print_r($row_continent);
-							        echo "<li class='font-weight-bold'><button class='btn btn-secondary btn-sm btn-block my-1' type='button' data-toggle='collapse' data-target='#multiCollapseEx$n' aria-expanded='false' aria-controls='multiCollapseEx$n'>" . $row_continent[0] . "</button></li><ol>";
-									$query_country = "SELECT `table_country`.`name_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' AND `table_country`.`continent_country` = '" . $row_continent[0] . "' GROUP BY `table_country`.`name_country`";
-							        $result_country = $connection -> query($query_country);
-							        if(!$result_country) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
-							        else {
-							        	echo "<div class='collapse multi-collapse' id='multiCollapseEx$n'>";
-							        	$rows_country = $result_country -> num_rows;
-							        	for($m=0; $m < $rows_country; $m++){ 
-							        		$result_country -> data_seek($m);
-							        		$row_country = $result_country -> fetch_array(MYSQLI_NUM);
-							        		// print_r($row_country);
-
-							        		$whenSend = "'select_data.php'";
-							        		$nameCountry = "'$row_country[0]'";
-							        		$waySendNameCountry = "'info-box'";
-
-							        		echo '<li class="my-2 table__li_hover" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
-															    //sendData(fileName, countryName, whatThis, whatThisId, way)
-							        	}
-							        }
-							        echo "</div></ol>";
-							    }
-//------------------------------------------------------------------------------------------------------------------------
-							    $addCountry = "'addform.php'";
-							    $way = "'info-box'";
-
-							    echo '
-							    </ul>
-							    <p>
-								    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5" onclick="sendData(' . $addCountry . ', null, null, null, ' . $way . ')">
-							    </p>';
-//------------------------------------------------------------------------------------------------------------------------
-							    $tableCountry = "'table_users.php'";
-
-							    echo '
-							    <p>
-								    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1" onclick="sendData(' . $tableCountry . ', null, null, null, ' . $way . ')">
-							    </p>
-						    </div>';
-
-				    echo '<div class="col-10 p-0 d-flex justify-content-start">								    
-								<div class="info-box container-fluid p-0"></div>
-						  </div>
-					</div>';
-
+				
+				echo "
+					<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.
+					</div>
+					<form action='/php-script/session_destroy.php' method='post' class='form-inline'>
+						<input type='submit' name='destroy' class='btn btn-dark btn-lg mb-5' value='Выход'>
+					</form>";
+			  
 			}
 		}
 	

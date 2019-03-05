@@ -13,6 +13,6 @@
 	<script type=\"text/javascript\" src=\"../css/bootstrap/js/bootstrap.min.js\"></script>
 	<script type=\"text/javascript\" src=\"../css/bootstrap/js/popper.min.js\"></script>";
 
-	echo "<h2 class='alert alert-danger'>Вы завершили сеанс.</h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>" ;
-	echo '<script>setTimeout(\'location="../admin/index.php"\',3000)</script>';//автоматическое перенаправление на страницу панели админа
+	echo "<h2 class='alert alert-danger'>Вы завершили сеанс.</h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
+	echo '<script>setTimeout(\'location="../admin/new_admin.php"\',3000)</script>';//автоматическое перенаправление на страницу панели админа
 ?>

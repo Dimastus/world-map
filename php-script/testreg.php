@@ -30,13 +30,13 @@
     }
 
     if (empty($login) or empty($password)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
-        {
-        echo "<h2 class='alert alert-danger'>Вы ввели не всю информацию :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>" ;
-        echo '<script>setTimeout(\'location="../admin/index.php"\', 3000)</script>';//автоматическое перенаправление на страницу авторизации
+    {
+        echo "<h2 class='alert alert-danger'>Вы ввели не всю информацию :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
+        echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу авторизации
         exit ("<hr>");
-        }
+    }
 
-    //если логин и пароль введены,то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
+    //если логин и пароль введены, то обрабатываем их, чтобы теги и скрипты не работали
     $login = defend($login);
     $password = defend($password);
 
@@ -52,8 +52,8 @@
     $myrow = $result -> fetch_array(MYSQLI_ASSOC);
     if (empty($myrow['password'])){
         //если пользователя с введенным логином не существует
-        echo "<h2 class='alert alert-danger'>Извините, введённый вами login не существует! :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>";
-            echo '<script>setTimeout(\'location="../admin/index.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
+        echo "<h2 class='alert alert-danger'>Извините, введённый вами login не существует! :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>";
+            echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
         exit ("<hr>");
     }
     else {
@@ -63,13 +63,13 @@
             //если пароли совпадают, то запускаем пользователю сессию! Можете его поздравить, он вошел!
             $_SESSION['login']=$myrow['login'];
             $_SESSION['id_role']=$myrow['id_role'];//эти данные очень часто используются, вот их и будет "носить с собой" вошедший пользователь
-            echo "<h2 class='alert alert-success'>Вы успешно вошли в панель администратора! :) </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>" ;
-            echo '<script>setTimeout(\'location="../admin/index.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
+            echo "<h2 class='alert alert-success'>Вы успешно вошли в панель администратора! :) </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
+            echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
         }
         else {
             //если пароли не сошлись
-            echo "<h2 class='alert alert-danger'>Извините, введённый вами пароль не верен! :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>" ;
-            echo '<script>setTimeout(\'location="../admin/index.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
+            echo "<h2 class='alert alert-danger'>Извините, введённый вами пароль не верен! :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
+            echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
             exit ("<hr>");
         }
     }

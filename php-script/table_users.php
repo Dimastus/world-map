@@ -21,11 +21,10 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 	        <table class=\"table table-hover table-dark text-center justify-content-center\">
 	          <thead>
 	            <tr>
-	              <th scope=\"col\">Логин</th>
-	              <th scope=\"col\">Уровень привилегий</th>
-	              <th scope=\"col\">Pедактируемые страны</th>
-	              <th scope=\"col\">Дополнительно</th>
-	              <th scope=\"col\">Directory Tree</th>
+	              <th>Логин</th>
+	              <th>Уровень привилегий</th>
+	              <th>Pедактируемые страны</th>
+	              <th>Дополнительно</th>
 	            </tr>
 	          </thead>
 	          <tbody>";
@@ -115,9 +114,8 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 						</table>
 					</div>
 				</td>";
-		echo "<td>";
 
-		/* дерево стран, принадлежащие определенному пользователю */
+		/* дерево стран, принадлежащие определенному пользователю 
 		$query_continent = "SELECT `table_country`.`continent_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' GROUP BY `table_country`.`continent_country`";
 		$result_continent = $connection -> query($query_continent);
 		if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
@@ -145,92 +143,11 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 			        echo "</ol>";
 			    }		
 			    echo "</ul>";					    
-		}
+		}*/
 		echo "</td></tr>";
 	}
 	//справка по привилегиям (bootstrap tooltip)
 	echo"</tbody></table></div><hr>";
-	echo '
-		<ul class="nav flex-column bg-dark float-left mr-5 mb-5" style="width: 300px">
-		  <li class="nav-item">
-		    <a class="nav-link active text-white font-weight-bold" href="#">Africa</a>
-			    <ol class="nav flex-column bg-dark text-white ml-5" style="width: 200px">
-			      <li class="nav-item">
-			        <a class="nav-link active text-white" href="#">Africa</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Asia</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Europe</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">United State of Amerika</a>
-			      </li>
-			    </ol>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link text-white font-weight-bold" href="#">Asia</a>
-			    <ol class="nav flex-column bg-dark text-white ml-5" style="width: 200px">
-			      <li class="nav-item">
-			        <a class="nav-link active text-white" href="#">Africa</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Asia</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Europe</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">United State of Amerika</a>
-			      </li>
-			    </ol>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link text-white font-weight-bold" href="#">Europe</a>
-			    <ol class="nav flex-column bg-dark text-white ml-5" style="width: 200px">
-			      <li class="nav-item">
-			        <a class="nav-link active text-white" href="#">Africa</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Asia</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">Europe</a>
-			      </li>
-			      <li class="nav-item">
-			        <a class="nav-link text-white" href="#">United State of Amerika</a>
-			      </li>
-			    </ol>
-		  </li>
-		  <li><input type="submit" name="asd" class="btn btn-warning btn-block mt-5" value="table person"></li>
-		</ul>
-		<div class="container-fluid">
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
-			  <li class="nav-item">
-			    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Country</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Person</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Tools</a>
-			  </li>
-			</ul>
-				<form>
-			<div class="tab-content bg-white p-4" id="myTabContent">
-			  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-				  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, vitae minima dicta quisquam laborum praesentium voluptatum, nulla possimus hic suscipit ratione facere fuga fugit doloremque est laboriosam voluptatem soluta nam. Voluptas amet laborum animi fugit, sit, alias quam deserunt tempora voluptatem, tenetur asperiores repellendus. Omnis animi debitis inventore provident natus reiciendis assumenda reprehenderit corrupti explicabo, totam at perspiciatis accusamus nam eveniet consequatur, dignissimos ducimus. Earum ea eos atque sint dicta. Illum quaerat dolore at, repellat error dignissimos numquam cum unde cupiditate neque exercitationem accusamus provident voluptatem, minima mollitia veritatis eum, blanditiis. Ipsa alias possimus modi doloribus non corporis, quibusdam eligendi architecto animi aliquid dolorum. Perspiciatis necessitatibus modi ut quos exercitationem, tenetur, eveniet minus possimus inventore incidunt perferendis magni sunt cupiditate laudantium molestiae repellat labore recusandae itaque officiis sapiente quis! Mollitia laboriosam dolorem iure ducimus voluptate eligendi nesciunt, tempore magni! Voluptas omnis dolores ea non adipisci, est quidem deserunt atque enim quos nihil quasi, inventore sit magnam sapiente eius. Minima similique officiis nihil placeat, veniam, vero culpa eos unde numquam ex, perferendis illum deserunt expedita esse porro iusto excepturi saepe earum maiores sed consequuntur corporis quidem in? Cupiditate velit illum, neque enim dolores doloremque repellendus consequatur veniam odio vel perferendis, temporibus.
-			  </div>
-			  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-				  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur mollitia delectus a iusto saepe asperiores iste omnis, eos ipsa atque. Nesciunt dolore iure sequi aperiam. Nobis totam, laboriosam aut distinctio id ad reprehenderit corporis nihil amet iusto. Perspiciatis excepturi sunt corporis explicabo, modi, illum nisi rem quaerat odit nulla voluptate pariatur, ducimus accusamus ipsam fugit omnis dolorem ad rerum harum repellendus. Repellat culpa voluptatem provident dolorum autem ipsum, totam vero ex, earum delectus minus fuga illum magnam accusantium fugiat quidem sint sed ut, aperiam, quasi. Iste corporis libero ad eaque natus exercitationem tempore deleniti id magni quisquam. Natus incidunt et excepturi magnam itaque illo porro quae, harum nisi. Officia sit ducimus blanditiis assumenda corporis mollitia, doloremque, laudantium saepe iure eum in nihil perferendis laborum rem alias porro illum maxime deserunt, ex voluptas numquam fugit id facilis. Sed tempore consequuntur corporis non recusandae nesciunt eaque adipisci, nam! Est a id consequuntur, architecto provident fugiat ipsum numquam nulla repellendus obcaecati tempora autem voluptatem quas eius modi ipsa esse earum quos voluptas. Doloribus, perspiciatis veniam. Atque corrupti voluptatum ipsum illo eaque deserunt delectus maiores, expedita dolor reprehenderit enim, ad? Ab molestiae architecto adipisci aliquid, eligendi voluptatibus modi veniam ea! Totam, at facilis vel!
-			  </div>
-			  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-				  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit velit dolores voluptas amet sed delectus vitae accusantium aperiam saepe aliquid perferendis, non illum cupiditate, qui culpa, laudantium ullam. Ipsam iusto harum amet alias natus, officiis blanditiis tenetur, pariatur nisi voluptatibus, non saepe laudantium nemo incidunt et officia. In itaque veritatis officiis, id iure nobis aliquid laborum laudantium velit cupiditate obcaecati dicta repudiandae voluptates alias architecto culpa. Dolores eos consequuntur, est illum laborum veritatis beatae? Ex id reiciendis ut, natus tempore similique, eligendi non necessitatibus veritatis doloribus consequatur ipsa fuga ducimus veniam corporis quaerat odit velit voluptas laudantium maxime aperiam quibusdam, ratione assumenda. Rem, dolores dolorum qui laborum, iste reprehenderit, nihil tempora aspernatur eligendi repudiandae, maxime animi doloribus culpa quaerat voluptatum ut eaque eos harum sequi! Impedit, nobis consectetur voluptates deleniti earum expedita explicabo dolorem, nostrum quisquam ducimus ut aspernatur. Quibusdam voluptatibus cupiditate impedit, reprehenderit nemo itaque numquam, aperiam sequi, exercitationem, voluptatum porro eaque tempore odit? Consequatur, ab asperiores quisquam adipisci. Rem obcaecati non soluta, voluptatum quibusdam amet architecto doloremque sint, quo tempore esse quidem repudiandae? Harum illum nam deleniti, corporis natus odio dignissimos ipsum animi esse porro ducimus ab libero vitae aperiam, ipsam eos eius! Voluptatem veritatis veniam sapiente cupiditate!
-			  </div>
-			</div>
-			  </form>
-		</div>';
 	echo "<script>
 		    var z = document.getElementsByClassName('replace');
 		    innerHTML = z.innerHTML;

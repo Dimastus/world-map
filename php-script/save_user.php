@@ -1,8 +1,6 @@
 <?php
 	session_start();
 
-	echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
-
 	echo "<!-- Подключение Bootstrap -->
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/bootstrap.min.css\">
 	<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/signin.css\">
@@ -91,8 +89,8 @@
 
 	// Проверяем, есть ли ошибки
 	if ($result2 == 'TRUE'){
-	    echo "<h2 class='alert alert-success'>Вы успешно зарегистрированы!:) </h2><div class='alert alert-success'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/index.php'>здесь</a></div>" ;
-		echo '<script>setTimeout(\'location="../admin/index.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
+	    echo "<h2 class='alert alert-success'>Вы успешно зарегистрированы!:) </h2><div class='alert alert-success'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
+		echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
 	}
 	else {
 		echo "<h2 class='alert alert-danger'>Ошибка! Вы не зарегистрированы :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу регистрации. Если этого не произошло нажмите <a href='registration.php'>здесь</a></div>" ;
