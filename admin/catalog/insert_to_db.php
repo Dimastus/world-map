@@ -2,21 +2,21 @@
 
 	session_start();
 
-	if($_SESSION['login'] == '') {
+	if ($_SESSION['login'] == '') {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
 
 	}
-	elseif ($_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2)) {
+	elseif ( $_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2) ) {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		$way = "../../php-script/";	//часть пути для подключения файлов
 
@@ -27,9 +27,8 @@
 		require_once 'function.php';
 
 		//вставка данных о стране и должностных лицах
-		if(isset($_POST['insertData'])) {
-
-			//?????????????????????? подумать над дополнительным добавлением должностных лиц, когда страна уже есть в БД, а необходимо добавить кого-нибудь ?????????????????
+		if ( isset($_POST['insertData']) ) {
+			
 			//данные по стране
 			$name_country = defend(my_ucfirst(mb_strtolower($_POST['name_country'])));
 			$index_country = defend(mb_strtoupper($_POST['index_country']));
@@ -94,7 +93,7 @@
 		}
 
 		//обновление дынных о стране и должностных лицах
-		if(isset($_POST['updateData'])) {
+		if ( isset($_POST['updateData']) ) {
 
 			//print_r($_POST);
 		    //print_r($_FILES);
@@ -199,7 +198,7 @@
 		}
 
 		//удаление страны и её должностных лиц
-		if(isset($_POST['deleteData'])) {
+		if ( isset($_POST['deleteData']) ) {
 			//print_r($_POST);
 
 			$name_country = defend($_POST['name_country_old']);
@@ -245,7 +244,7 @@
 		}
 
 		//обновление дынных о стране
-		if(isset($_POST['updateDataCountry'])) {
+		if ( isset($_POST['updateDataCountry']) ) {
 
 			if($_FILES['flag_edit']['name'] == ''){
 			            $flag_country = $_POST['flag_country'];
@@ -297,7 +296,7 @@
 		}
 
 		//обновление дынных о должностных лицах
-		if(isset($_POST['updateDataPerson'])) {
+		if ( isset($_POST['updateDataPerson']) ) {
 
 			//echo "updateDataPerson<br>";
 			//print_r($_POST);
@@ -355,7 +354,7 @@
 		}
 
 		//удаление должностного лица
-		if(isset($_POST['what_this'])) {
+		if ( isset($_POST['what_this']) && $_POST['what_this'] == 'delPerson' ) {
 
 			$id_person = defend($_POST['what_this_id']);
 
@@ -389,7 +388,7 @@
 		}
 
 		//изменение пароля пользователя
-		if (isset($_POST['updatePassword'])) {
+		if ( isset($_POST['updatePassword']) ) {
 
 			//print_r($_POST);
 			
@@ -472,12 +471,106 @@
 
 		}
 
+		//добавление должностного лица
+		if ( isset($_POST['addPerson'])) {
+
+		    $position_person = defend($_POST['addPersonPosition']);
+		    $name_person = defend($_POST['addPersonName']);
+		    $info_person = defend($_POST['addPersonInfo']);
+		    $name_country = defend($_POST['addPersonCountry']);
+
+		    if ( isset($_FILES['addPersonFoto']) ) {
+
+				$check = can_upload($_FILES['addPersonFoto']);
+
+				if ($check === true) {
+
+					$full_name_photo = make_upload($_FILES['addPersonFoto']);
+					$foto_person =  $full_name_photo ;
+
+					echo "<div class='alert alert-success'>Файл <strong>$full_name_photo</strong> успешно загружен!</div>";
+
+				}
+				else {
+
+					echo "<strong class='alert alert-danger'>$check</strong>";
+
+				}
+
+		    }
+
+		    $query_add_person = "INSERT INTO table_persons VALUES (NULL,'" . $position_person . "',
+												                        '" . $name_person . "',
+												                        '" . $info_person . "',
+		                        (SELECT table_country.id_country FROM table_country WHERE table_country.name_country = '" . $name_country . "'),
+		                        0, '" . $foto_person . "')";
+
+		    if ( !$result_add_person = $connection -> query($query_add_person) ) die ("Сбой при вставке данных: " . $connection -> error . "<br> Number error: " . $connection -> errno);
+
+		    echo "<div class='alert alert-success'>Должностное лицо добавлено</div>";
+    	    echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 3000)</script>';
+
+		}
+
+		//для таблицы пользователей (4 обработчика)
+        //"обработчик" кнопки удаления пользователя
+		if (isset($_POST['delete_user']) && $_POST['id']) {
+
+			$query_del = "DELETE FROM table_users WHERE id = " . $_POST['id'];
+
+			$result_del = $connection -> query($query_del);
+			if(!$result_del) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+
+    	    echo "<div class='alert alert-success display-1 font-weight-bold'>Пользователь удален</div>";
+    	    echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 3000)</script>';
+
+		}
+
+		//"обработчик" кнопки удаления редактируемой страны у пользователя
+		if (isset($_POST['del_edit_country']) && $_POST['id_user'] && $_POST['id_edit_country']) {
+
+			$query_del_edit = "DELETE FROM `table_for_tc-tu` WHERE id_table_users = " . $_POST['id_user'] . " AND id_table_country = " . $_POST['id_edit_country'];
+
+			$result_del_edit = $connection -> query($query_del_edit);
+			if(!$result_del_edit) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+
+    	    echo "<div class='alert alert-success display-1 font-weight-bold'>Страна удалена</div>";
+    	    echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 3000)</script>';
+
+		}
+
+		//"обработчик" кнопки добавления редактируемой страны пользователю
+		if (isset($_POST['add_edit_country']) && $_POST['id_user']) {
+
+			$query_add_edit = "INSERT INTO `table_for_tc-tu` (`id`, `id_table_country`, `id_table_users`, `comment`) VALUES (NULL, '" . $_POST['sel_country'] . "', '" . $_POST['id_user'] . "', NULL)";
+
+			$result_add_edit = $connection -> query($query_add_edit);
+			if(!$result_add_edit) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+
+    	    echo "<div class='alert alert-success display-1 font-weight-bold'>Страна добавлена</div>";
+    	    echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 3000)</script>';
+
+		}
+
+		//"обработчик" кнопки изменения привилегий пользователя
+		if (isset($_POST['up_privilege']) && $_POST['id']) {
+
+			$query_up = "UPDATE table_users SET id_role = '" . $_POST['sel_priv'] . "' WHERE id = " . $_POST['id'];
+
+			$result_up = $connection -> query($query_up);
+			if(!$result_up) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
+			
+    	    echo "<div class='alert alert-success display-1 font-weight-bold'>Привилегии изменены</div>";
+    	    echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 3000)</script>';
+
+		}
+
 	}
 	else {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "
 			<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.

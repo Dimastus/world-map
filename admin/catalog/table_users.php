@@ -5,8 +5,8 @@
 	if($_SESSION['login'] == '') {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
@@ -22,7 +22,7 @@
 		/*подключить файл с функциями*/
 		require_once 'function.php';
 
-		$query = "SELECT * FROM table_users";
+		$query = "SELECT * FROM table_users ORDER BY `table_users`.`id_role`";
 		$result = $connection -> query($query); //извлекаем из базы все данные о пользователе с введенным логином
 		if(!$result) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 		$rows = $result -> num_rows;
@@ -83,7 +83,7 @@
 					  			</tr>
 					  			<tr>		  			
 									<td>									
-									    <form action='new_admin.php' method='post'>
+									    <form action='catalog/insert_to_db.php' method='post'>
 									    	<div class='input-group mb-3'>
 										      <select name='sel_priv' class=\"form-control custom-select\">
 										        <option value='1'>администратор сайта</option>
@@ -99,25 +99,25 @@
 									    </form>  
 									</td>
 									<td class='d-flex justify-content-center'>
-										<button type='button' class='btn btn-outline-primary' data-toggle='modal' data-target='#exampleModal" . $myrow['id'] . "' onclick='editCountry(" . $myrow['id'] . ")'>
-										  <img src='../../img/icons/icons8-pencil.png' width='35px'>
+										<button type='button' class='btn btn-outline-primary m-0 p-1' data-toggle='modal' data-target='#editCountryModal" . $myrow['id'] . "' onclick='editCountry(" . $myrow['id'] . ")'>
+											<img src='/img/icons/icons8-pencil.png' width='35px'>
 										</button>
-									  	<div class='modal fade text-dark' id='exampleModal" . $myrow['id'] . "' tabnew_admin='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-									  	  <div class='modal-dialog modal-dialog-centered' role='document'>
-									  	    <div class='modal-content'>
-												<div class='edit_country_person'></div>
-									  	    </div>
-									  	  </div>
-									  	</div>
+										<div class='modal fade text-dark' id='editCountryModal" . $myrow['id'] . "' tabnew_admin='-1' role='dialog' aria-labelledby='editCountryModalLabel' aria-hidden='true'>
+											<div class='modal-dialog modal-dialog-centered' role='document'>
+												<div class='modal-content'>
+													<div class='edit_country_person'></div>
+												</div>
+											</div>
+										</div>
 									</td>";
 
 								echo "<td>
-										<form action='new_admin.php' method='post'>
+										<form action='catalog/insert_to_db.php' method='post'>
 										    <div class='input-group mb-3 justify-content-center'>
 											    <div class='input-group-prepend'>
-											      <input type='hidden' name='delete' value='yes'>
-											      <input type='hidden' name='id' value='" . $myrow['id'] . "'>
-											      <input type='submit' name='delete_user' class='btn btn-outline-danger rounded font-weight-bold' value='удалить'>
+													<input type='hidden' name='delete' value='yes'>
+													<input type='hidden' name='id' value='" . $myrow['id'] . "'>
+													<input type='submit' name='delete_user' class='btn btn-outline-danger rounded font-weight-bold' value='удалить'>
 											    </div>
 											</div>
 									    </form>  
@@ -158,7 +158,7 @@
 				  jQuery(function(){
 				    var $ = jQuery;
 				      $.ajax({
-				          url: '../php-script/edit_country.php',
+				          url: 'catalog/edit_country.php',
 				          type: 'POST',
 				          data: {code: i},
 				          async: false,
@@ -174,8 +174,8 @@
 	else {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "
 			<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.

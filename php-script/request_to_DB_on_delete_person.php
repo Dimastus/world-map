@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+  echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 0)</script>';
+
+  /*
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/bootstrap.min.css\">";
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/signin.css\">";
 
@@ -9,9 +12,7 @@ if($_SESSION['login']=='') {
   echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
 }
 elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_role']==2)) {
-	/*подключить файл с переменными БД*/
 	require_once 'data_to_db.php';
-	/*подключить файл с созданием соединения БД*/
 	require_once 'connect_to_db.php';
 
 	$person = $_POST['formDelete'];
@@ -54,5 +55,5 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 else {
   echo "<div class='alert alert-danger'>У Вас нет доступа!</div>";
   echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
-}
+}*/
 ?>

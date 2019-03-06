@@ -1,6 +1,7 @@
 <?php
   session_start();
 ?>
+
 <!doctype html>
 <html>
 <head>
@@ -9,11 +10,15 @@
   <link rel="icon" href="../img/image/wrench.ico">
 	<title>Панель администратора</title>
 
-  <!-- Подключение Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/signin.css">
 
-  <!-- Подключение визуального редактора tinymce -->
+  <script>setTimeout(location="/admin/new_admin.php", 0)</script>
+
+
+  <!-- Подключение Bootstrap
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/signin.css">   -->
+
+  <!-- Подключение визуального редактора tinymce
   <script src="../tinymce/tinymce.min.js"></script>
   <script>
     tinymce.init({ 
@@ -36,10 +41,11 @@
         });
       });
     };
-	</script>
+	</script> -->
 </head>
 <body>
 <?php
+/*
   mb_internal_encoding("UTF-8");
   if ($_SESSION['login']==''){
   echo <<<_END
@@ -66,12 +72,11 @@
 _END;
 }
   else {    
+
     // подключаемся к базе
     require_once '../php-script/data_to_db.php';
     require_once '../php-script/connect_to_db.php';
-    /*подключить файл с функциями для загрузки картинок*/
     include_once '../php-script/func_for_img.php';
-    /*подключить файл с "обезвреживанием"*/
     require_once '../php-script/protect.php';
 
     $query = "SELECT * FROM table_users WHERE login='" . $_SESSION['login'] . "'";
@@ -94,7 +99,8 @@ _END;
       //таблица пользователей
       $table = "table_users.php";
 
-      if($myrow['id_role'] == 1){
+      if($myrow['id_role'] == 1) {
+
         echo <<<_END
               <li class='nav-item dropdown'>
                 <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -187,7 +193,6 @@ _END;
           $reference_info = defend($_POST['reference_info']);//присваивание переменной $reference_info значения
           //$foto_person = $_POST['foto_person'];//присваивание переменной $foto_person значения
 
-          /*выбор картинок*/
           if(isset($_FILES['search_foto'])) {
             // проверяем, можно ли загружать изображение
             $check = can_upload($_FILES['search_foto']);
@@ -336,13 +341,12 @@ _END;
 
         $query2 = "SELECT flag_country FROM table_country WHERE name_country = '$name_country'";
 
-        /*блок кода, который отвечает за удаление фотографий должностных лиц, страна которых подвержена удалению*/
+        
         $query3 = "SELECT foto FROM table_persons WHERE table_persons.id_country = (SELECT table_country.id_country FROM table_country WHERE table_country.name_country = '$name_country')";//запрос к БД на выбор изображений должностных лиц, страну которых удаляем
         if(!$result3 = $connection -> query($query3)){
           echo "<div class='alert alert-danger'>Сбой при удалении данных: $query2<br>" . $connection -> error . "<br></div>";//если произошла ошибка, вывод сообщения
         }
-        else {          
-          /*Удаление фото должностных лиц страны*/              
+        else {             
           $fotoPers = $result3 -> num_rows;
           for($y = 0; $y < $fotoPers; ++$y)
           {
@@ -367,7 +371,6 @@ _END;
             $rows = $result2 -> num_rows;
             for($j = 0; $j < $rows; ++$j)
             {
-              /*Удаление флага страны*/
               $result2 -> data_seek($j);
               $row = $result2 -> fetch_array(MYSQLI_NUM);//получение отдельной строки таблицы
               if(!unlink("../" . $row[0])){ //функция удаления
@@ -389,7 +392,6 @@ _END;
         $info_about_country = defend($_POST['info_about_country']);//присваивание переменной $info_about_country значения
         $index_country = defend(mb_strtoupper($_POST['index_country']));//присваивание переменной $index_country значения
 
-        /*выбор картинок*/
         if(isset($_FILES['search_flag'])) {
           // проверяем, можно ли загружать изображение
           $check = can_upload($_FILES['search_flag']);
@@ -567,12 +569,12 @@ _MODAL;
               $string = ucfirst($string);
           }
           return $string;
-      }
+      }*/
 
 ?>  
-  </script>
+  <!-- 
   <script type="text/javascript" src="../css/bootstrap/js/jquery.min.js"></script>
   <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../css/bootstrap/js/popper.min.js"></script>
+  <script type="text/javascript" src="../css/bootstrap/js/popper.min.js"></script> -->
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
-    session_start();//  вся процедура работает на сессиях. Именно в ней хранятся данные  пользователя, пока он находится на сайте. Очень важно запустить их в  самом начале странички!!!
+
+    session_start();
 	
 	//echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 
@@ -60,16 +61,20 @@
         //если существует, то сверяем пароли
         $salt = $myrow['salt'];
         if ($myrow['password']==md5($password.$salt)) {
+
             //если пароли совпадают, то запускаем пользователю сессию! Можете его поздравить, он вошел!
             $_SESSION['login']=$myrow['login'];
             $_SESSION['id_role']=$myrow['id_role'];//эти данные очень часто используются, вот их и будет "носить с собой" вошедший пользователь
             echo "<h2 class='alert alert-success'>Вы успешно вошли в панель администратора! :) </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
             echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
+        
         }
         else {
+
             //если пароли не сошлись
             echo "<h2 class='alert alert-danger'>Извините, введённый вами пароль не верен! :( </h2><div class='alert alert-warning'>Через несколько секунд Вы будете автоматически перенаправлены на страницу авторизации. Если этого не произошло нажмите <a href='admin/new_admin.php'>здесь</a></div>" ;
             echo '<script>setTimeout(\'location="../admin/new_admin.php"\', 3000)</script>';//автоматическое перенаправление на страницу панели админа
             exit ("<hr>");
+
         }
     }

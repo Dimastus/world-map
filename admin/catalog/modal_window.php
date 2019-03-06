@@ -5,8 +5,8 @@
 	if($_SESSION['login'] == '') {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
@@ -161,6 +161,7 @@
 					';
 				}
 			}
+
 		} 
 		elseif ($_POST['what_this'] == "person") {
 
@@ -222,8 +223,10 @@
 						</form>";
 				}
 			}
+
 		}
 		elseif ($_POST['what_this'] == "password") {
+
 			echo "
 				<form action='catalog/insert_to_db.php' method='post' enctype='multipart/form-data'>
 					<div class='input-group w-100 mb-3'>
@@ -246,19 +249,66 @@
 					</div>
 					<div class='d-flex justify-content-center mt-3'>
 						<div class='btn-group btn-group-sm'>
-							<input type='submit' name='updatePassword' class='btn btn-success' value='Сохранить изменения' title='сохранение внесенных изменений'>
+							<input type='submit' name='updatePassword' class='btn btn-success font-weight-bold' value='Сохранить изменения' title='сохранение внесенных изменений'>
 						</div>
 					</div>
 				</form>
 				";
+
+		}
+		elseif ($_POST['what_this'] == "addPerson") {
+
+			$addPersonCountry = defend($_POST['nameCountry']);
+			
+			echo '
+				<h3 class="p-0 m-0 text-center">Добавление должностного лица</h3>
+				<form action="catalog/insert_to_db.php" method="post" enctype="multipart/form-data">
+					<div class="tab-content bg-white p-4" id="myTabContent">
+						<div class="tab-pane fade show active bg-dark p-3 rounded" id="person_modal" role="tabpanel" aria-labelledby="person-tab">';
+					echo "  <div class='input-group mb-3'>
+								<div class='input-group w-50'>
+									<div class='input-group-prepend'>
+										<label for='addPersonPosition' class='input-group-text'>Должность</label>
+									</div>
+									<input type='text' name='addPersonPosition' class='form-control text-center bg-light rounded-right' placeholder='Введите должность' required>
+								</div>
+								<div class='input-group w-50'>
+									<div class='input-group-prepend ml-2'>			
+										<label for='addPersonName' class='input-group-text'>ФИО</label>
+									</div>
+									<input type='text' name='addPersonName' class='form-control text-center bg-light'  placeholder='Введите фамилию имя отчество' required>
+									<input type='hidden' name='addPersonCountry' value='" . $addPersonCountry . "'>
+								</div>
+							</div>
+							<div class='input-group mb-3 text-center'>
+								<div class='input-group-prepend'>
+									<label for='addPersonFoto' class='input-group-text'>Фото</label>
+								</div>
+								<div class='form-control bg-light'>
+									<input name='addPersonFoto' type='file' class='btn btn-outline-secondary btn-sm'>
+								</div>
+							</div>						
+							<div class='input-group mb-3 text-center'>
+								<label for='addPersonInfo' class='rounded-top bg-light w-100 mb-0 p-2 text-center'>Информация</label>	
+								<textarea id='infoAddPerson' name='addPersonInfo' class='form-control mytextarea' aria-label='With textarea' placeholder='Введите информацию о должностном лице' rows='15'>$reference_info</textarea>
+							</div>
+						</div>
+					</div>
+					<div class='d-flex justify-content-end mb-2'>
+						<div class='btn-group btn-group-lg mr-5'>
+							<input type='submit' name='addPerson' class='btn btn-success' value='Сохранить' title='сохранение внесенных изменений'>
+						</div>
+					</div>
+				</form>";
+
 		}
 
 	}
 	else {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "
 			<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.

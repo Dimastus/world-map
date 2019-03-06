@@ -99,23 +99,13 @@ _END;
 		}
 		else {  
 
-			if($_SESSION['login'] == '') {
-
-				echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
-				echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
-
-			}
-			elseif ($_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2)) {
+			if( $_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2) ) {
 
 				$way = "../php-script/";	//часть пути для подключения файлов
 
-			    // подключаемся к базе
 				require_once $way . 'data_to_db.php';
 				require_once $way . 'connect_to_db.php';
-				/*подключить файл с функциями для загрузки картинок*/
-				include_once $way . 'func_for_img.php';
-				/*подключить файл с "обезвреживанием"*/
-				require_once $way . 'protect.php';
+				include_once 'catalog/function.php';
 
 				$query = "SELECT * FROM table_users WHERE login='" . $_SESSION['login'] . "'";			
 				$result = $connection -> query($query); //извлекаем из базы все данные о пользователе с введенным логином
@@ -128,10 +118,10 @@ _END;
 				$whatThisPassword = '"password"';
 
 				echo "<div class='row bg-dark m-0 py-3'>
-						<div class='col-10 d-flex justify-content-center align-items-center'>
+						<div class='col-10 d-flex justify-content-center align-items-center p-0 text-center'>
 							<a class='display-4 text-uppercase font-weight-bold text-white ml-5' href='new_admin.php'>Панель администратора</a>
 						</div>
-						<div class='col-2 d-flex justify-content-end pr-5'>
+						<div class='col-2 d-flex justify-content-end p-0 pr-sm-3'>
 							<div class='text-white'>
 								<span class='navbar-text'>
 									Добро пожаловать, <strong class='text-white'>" . $myrow['login'] . "</strong>
@@ -154,7 +144,7 @@ _END;
 				if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 				else {
 						echo '<div class="row m-0">
-								<div class="col-2 bg-dark">
+								<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 bg-dark">
 									<div class="dropdown-divider"></div>
 									<ul class="nav flex-column text-white px-2">';
 						    		$rows_continent = $result_continent -> num_rows;
@@ -178,7 +168,7 @@ _END;
 								        		$nameCountry = "'$row_country[0]'";
 								        		$waySendNameCountry = "'info-box'";
 
-								        		echo '<li class="my-2 table__li_hover" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
+								        		echo '<li class="my-2 table__li_hover pl-1" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
 								        	}
 								        }
 								        echo "</div></ol>";
@@ -205,7 +195,7 @@ _END;
 									}
 
 					    echo '</div>
-						      <div class="col-10 p-0 d-flex justify-content-start">								    
+						      <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-10 p-0 d-flex justify-content-start">							    
 									<div class="info-box container-fluid p-0"></div>
 							  </div>
 						</div>';
@@ -218,15 +208,15 @@ _END;
 						<div class="modal-content">
 							<div class="modal-header bg-secondary p-1 pl-3 m-0">
 								<h5 class="modal-title text-warning font-weight-bold" id="modalEditPasswordLabel">Окно редактирования</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
+								<button type="button" class="close m-0 p-0 mr-1" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true" class="text-white m-0 p-0">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
 								<div class="editPassword-modal-box"></div>
 							</div>
 							<div class="modal-footer bg-secondary p-1 m-0">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+								<button type="button" class="btn btn-danger btn-sm font-weight-bold" data-dismiss="modal">Закрыть</button>
 							</div>
 						</div>
 					</div>
@@ -239,7 +229,7 @@ _END;
 					<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.
 					</div>
 					<form action='/php-script/session_destroy.php' method='post' class='form-inline'>
-						<input type='submit' name='destroy' class='btn btn-dark btn-lg mb-5' value='Выход'>
+						<input type='submit' name='destroy' class='btn btn-dark btn-lg m-5' value='Выход'>
 					</form>";
 			  
 			}

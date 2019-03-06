@@ -108,8 +108,7 @@ _END;
 _END;
 }
     
-              /**/
-    /*закрытие подключения к БД*/
+              
     require_once 'close_to_connect_with_db.php';
 ?>
 

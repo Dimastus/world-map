@@ -1,18 +1,23 @@
 <?php
 session_start();
 
+
+  echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 0)</script>';
+
+
+
 if($_SESSION['login']==''){
   echo "<span class=\"alert alert-danger\">Вы не должны быть здесь!</span>";
   echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
 }
-elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_role']==2)){
-	/*подключить файл с переменными БД*/
-	require_once 'data_to_db.php';
-	/*подключить файл с созданием соединения БД*/
-	require_once 'connect_to_db.php';
+elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_role']==2)) {
 
+	/*
+	require_once 'data_to_db.php';
+	require_once 'connect_to_db.php';
+	
 	$query = "SELECT * FROM table_users";
-	$result = $connection -> query($query); //извлекаем из базы все данные о пользователе с введенным логином
+	$result = $connection -> query($query);
 	if(!$result) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 	$rows = $result -> num_rows;
 
@@ -115,7 +120,6 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 					</div>
 				</td>";
 
-		/* дерево стран, принадлежащие определенному пользователю 
 		$query_continent = "SELECT `table_country`.`continent_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' GROUP BY `table_country`.`continent_country`";
 		$result_continent = $connection -> query($query_continent);
 		if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
@@ -143,7 +147,7 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 			        echo "</ol>";
 			    }		
 			    echo "</ul>";					    
-		}*/
+		}
 		echo "</td></tr>";
 	}
 	//справка по привилегиям (bootstrap tooltip)
@@ -185,7 +189,7 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 			    });
 			  });
 			};
-		</script>";  
+		</script>"; */ 
 }
 else {
   echo "<div class='alert alert-danger'>У Вас нет доступа!</div>";

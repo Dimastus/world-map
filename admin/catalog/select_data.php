@@ -5,8 +5,8 @@
 	if($_SESSION['login'] == '') {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
@@ -71,7 +71,7 @@
 							<a class="nav-link disabled" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Вооружение</a>
 						</li>
 					</ul>				
-					<div class="tab-content bg-white p-4" id="myTabContent">
+					<div class="tab-content bg-white p-3" id="myTabContent">
 						<div class="tab-pane fade show active" id="country" role="tabpanel" aria-labelledby="country-tab">
 							<form action="catalog/insert_to_db.php" method="post" enctype="multipart/form-data">
 								<table class="table table-hover table-dark text-center">
@@ -123,14 +123,25 @@
 								</table>
 							</form>
 						</div>
-						<div class="tab-pane fade text-center" id="person" role="tabpanel" aria-labelledby="person-tab">';
+						<div class="tab-pane fade" id="person" role="tabpanel" aria-labelledby="person-tab">';
 							$query_person_old = "SELECT * FROM table_persons WHERE table_persons.id_country = (SELECT table_country.id_country FROM table_country WHERE table_country.name_country = '" . $name_country . "')";
 
 							if(!$result_person_old = $connection -> query($query_person_old)){
 								echo "<div class='alert alert-danger'>Сбой при выборе данных: $query_person_old<br>" . $connection -> error . "<br><br></div>";
 							}
 							$rows_person_old = $result_person_old -> num_rows;
-							echo "<div class='container-fluid bg-dark p-0'>
+
+							$addPersonFile = '"modal_window.php"';
+							$addPersonWhatThis = '"addPerson"';
+							$addPersonWay = '"info-modal-box"';
+							$addPersonCountry = $name_country;
+
+							echo "
+								<button name='addPerson' class='btn btn-outline-success mx-4 mb-2 p-1'  title='Добавить должностное лицо' data-toggle='modal' data-target='#exampleModal' onclick='sendData(" . $addPersonFile . ", \"" . $addPersonCountry . "\", " . $addPersonWhatThis . ", null, " . $addPersonWay . ")'>
+										<img src='" . $way_to_icon . "plu-512.png' width='35px'>
+								</button>
+
+								<div class='container-fluid bg-dark p-0'>
 									<div class='row m-0 p-0'>";
 							for($i = 0; $i < $rows_person_old; ++$i){
 								$result_person_old -> data_seek($i);
@@ -147,12 +158,12 @@
 
 
 								$delPersonFile = '"insert_to_db.php"';
-								$delPersonWhatThis = '"person"';
+								$delPersonWhatThis = '"delPerson"';
 								$delPersonWhatThisId = $row_person_old[0];
 								$delPersonWay = '"info-modal-box"';
 
 								echo "		
-										<div class='col-6 border border-light p-0'>									
+										<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 border border-light p-0'>
 											<div class='container p-1'>
 												<div class='row m-0 p-0'>
 													<div class='col-3 p-1'>
@@ -162,7 +173,7 @@
 														<div><span class='font-weight-bold mr-2'>Должность:</span> $position_person</div>
 														<div><span class='font-weight-bold mr-2'>ФИО:</span> $full_name</div>
 														<div><span class='font-weight-bold'>Информация:</span></div>
-														<article id='infoAboutPerson$row_person_old[0]' name='user[$row_person_old[0]][reference_info]' class='text-up-admin'>$reference_info</article>
+														<article id='infoAboutPerson$row_person_old[0]' name='user[$row_person_old[0]][reference_info]' class='text-up-admin'><div class='pl-4'>$reference_info</div></article>
 													</div>
 													<div class='col-1 p-0'>
 														<div class='d-block my-1'>
@@ -188,7 +199,6 @@
 							echo "  </div>
 								</div>";
 							echo '
-							<input type="button" name="plusPerson" class="btn btn-secondary btn-sm" value="Добавить должностное лицо">
 						</div>
 						<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 						</div>
@@ -200,15 +210,15 @@
 							<div class="modal-content">
 								<div class="modal-header bg-secondary p-1 pl-3 m-0">
 									<h5 class="modal-title text-warning font-weight-bold" id="exampleModalLabel">Окно редактирования</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
+									<button type="button" class="close m-0 p-0 mr-1" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true" class="text-white m-0 p-0">&times;</span>
 									</button>
 								</div>
 								<div class="modal-body myModal">
 									<div class="info-modal-box"></div>
 								</div>
 								<div class="modal-footer bg-secondary p-1 m-0">
-									<button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+									<button type="button" class="btn btn-danger btn-sm font-weight-bold" data-dismiss="modal">Закрыть</button>
 								</div>
 							</div>
 						</div>
@@ -238,8 +248,8 @@
 	else {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "
 			<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.

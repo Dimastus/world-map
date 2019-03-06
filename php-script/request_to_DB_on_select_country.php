@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+  echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 0)</script>';
+
+  
 /*
 echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 
@@ -7,11 +11,11 @@ echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/b
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/signin.css\">";
 
 
-echo "<script type=\"text/javascript\" src=\"../css/bootstrap/js/jquery.min.js\"></script>";*/
+echo "<script type=\"text/javascript\" src=\"../css/bootstrap/js/jquery.min.js\"></script>";*//*
 
 if($_SESSION['login']==''){
   echo "<span class=\"alert alert-danger\">Вы не должны быть здесь!</span>";
-  echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
+  echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';
 }
 elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_role']==2)){
 
@@ -52,18 +56,15 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
   };
 </script>
 <?php
-  if(isset($_POST['param']))//проверка отправки данных программе для всех полей
+  if(isset($_POST['param']))
   {
-		/*подключить файл с переменными БД*/
 		require_once 'data_to_db.php';
-		/*подключить файл с созданием соединения БД*/
 		require_once 'connect_to_db.php';
-    /*подключить файл с "обезвреживанием"*/
     require_once 'protect.php';
 
     $parametr = defend($_POST['param']);
-		$query1 = "SELECT name_country FROM table_country WHERE continent_country = '" . $parametr . "' ORDER BY name_country ASC"; //запрос выборки данных из БД
-		if(!$result1 = $connection -> query($query1)) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");//в случае ошибки отправки данных - вывод сообщения
+		$query1 = "SELECT name_country FROM table_country WHERE continent_country = '" . $parametr . "' ORDER BY name_country ASC";
+		if(!$result1 = $connection -> query($query1)) die ("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 		else {
 			$rows = $result1 -> num_rows;
 
@@ -78,7 +79,7 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
     				      {
         						echo "<option>";
     				        $result1 -> data_seek($j);
-    				        $row = $result1 -> fetch_array(MYSQLI_NUM);//получение отдельной строки таблицы
+    				        $row = $result1 -> fetch_array(MYSQLI_NUM);
     				        foreach ($row as $key => $value) {
     				           echo $value;
       					    }
@@ -97,6 +98,6 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 }
 else {
   echo "<span class='alert alert-danger'>У Вас нет доступа!</div>";
-  echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
-}
+  echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';
+}*/
 ?>

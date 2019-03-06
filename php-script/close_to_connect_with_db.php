@@ -1,5 +1,5 @@
 <?php
 
-$connection -> close();
-
+	$connection -> close();
+	
 ?>

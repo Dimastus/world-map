@@ -5,8 +5,8 @@
 	if($_SESSION['login'] == '') {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "<div class=\"alert alert-danger\">Вы не должны быть здесь!</div>";
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
@@ -30,10 +30,7 @@
 	    // подключаемся к базе
 		require_once $way . 'data_to_db.php';
 		require_once $way . 'connect_to_db.php';
-		/*подключить файл с функциями для загрузки картинок*/
-		include_once $way . 'func_for_img.php';
-		/*подключить файл с "обезвреживанием"*/
-		require_once $way . 'protect.php';
+		include_once 'function.php';
 
 		$query_index = "SELECT * FROM `table_country_indexes` ORDER BY name_country ASC";
 		$result_index = $connection -> query($query_index);
@@ -157,6 +154,7 @@
 											</tr>
 										</tbody>
 									</table>
+									
 									<input type="button" name="plusPerson" class="btn btn-secondary btn-sm mr-5" value="+">
 
 								</div>
@@ -173,8 +171,8 @@
 	else {
 
 		echo ' 
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/bootstrap.min.css">
-			<link rel="stylesheet" type="text/css" href="../../css/bootstrap/css/signin.css">';
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/signin.css">';
 
 		echo "
 			<div class='alert alert-danger'>У Вас нет доступа к информации. Обратитесь к администратору по телефону <strong>(411) 13-02</strong>, либо пришлите письмо на адрес <strong>sham@givc.vs.mil.by</strong> с объяснением для чего Вам нужен доступ к панели администратора.

@@ -1,13 +1,16 @@
 <?php
 session_start();
 
+  echo '<script>setTimeout(\'location="/admin/new_admin.php"\', 0)</script>';
+
+  
 /*echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
 
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/bootstrap.min.css\">";
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"../css/bootstrap/css/signin.css\">";
 
 
-echo "<script type=\"text/javascript\" src=\"../css/bootstrap/js/jquery.min.js\"></script>";*/
+echo "<script type=\"text/javascript\" src=\"../css/bootstrap/js/jquery.min.js\"></script>";*//*
 
 if($_SESSION['login']==''){
   echo "<span class=\"alert alert-danger\">Вы не должны быть здесь!</span>";
@@ -52,14 +55,10 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 </script>
 <?php
 
-  if(isset($_POST['edit'])){   //проверка отправки данных из admin_panel.php
-    /*подключить файл с переменными БД*/
+  if(isset($_POST['edit'])){   
     require_once 'data_to_db.php';
-    /*подключить файл с созданием соединения БД*/
     require_once 'connect_to_db.php';
-    /*подключить файл с функциями для загрузки картинок*/
     include_once 'func_for_img.php';
-    /*подключить файл с "обезвреживанием"*/
     require_once 'protect.php';
 
     //print_r($_POST);
@@ -117,13 +116,9 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
   }
 
   if(isset($_POST['param'])) {
-  	/*подключить файл с переменными БД*/
   	require_once 'data_to_db.php';
-  	/*подключить файл с созданием соединения БД*/
   	require_once 'connect_to_db.php';
-  	/*подключить файл с функциями для загрузки картинок*/
   	include_once 'func_for_img.php';
-    /*подключить файл с "обезвреживанием"*/
     require_once 'protect.php';
 
   	//echo "<h2>Редактирование информации о должностных лицах</h2>";
@@ -162,5 +157,5 @@ elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_ro
 else {
   echo "<div class='alert alert-danger'>У Вас нет доступа!</div>";
   echo '<script>setTimeout(\'location="../admin/index.php"\', 2000)</script>';//автоматическое перенаправление на страницу панели админа
-}
+}*/
 ?>
