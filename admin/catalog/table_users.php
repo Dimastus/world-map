@@ -28,7 +28,7 @@
 		$rows = $result -> num_rows;
 
 		echo "<div class='container-fluid mt-3'>
-		        <table class=\"table table-hover table-dark text-center justify-content-center\">
+		        <table class=\"table table-dark text-center justify-content-center\">
 		          <thead>
 		            <tr>
 		              <th>Логин</th>
@@ -44,7 +44,8 @@
 			$myrow = $result -> fetch_array(MYSQLI_ASSOC);
 			echo "	<tr>
 					  <th scope='row'>" . $myrow['login'] . "</th>";
-				echo "<td data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"'Aдминистратора сайта' имеет возможность управлять пользователями и изменять информацию о стране и её должностных лицах;\n'Aдминистратора БД' имеет возможность только изменять информацию о стране и её должностных лицах;\n'Пользователь сайта' используется только для регистрации пользователя в БД.\"><strong class='replace'>" . $myrow['id_role'] . "</strong></td>
+				echo "<td data-toggle='tooltip' data-placement='bottom' title=\"'Aдминистратора сайта' имеет возможность управлять пользователями и изменять информацию о стране и её должностных лицах;\n'Aдминистратора БД' имеет возможность только изменять информацию о стране и её должностных лицах;\n'Пользователь сайта' используется только для регистрации пользователя в БД.\"><strong class='replace'>" . $myrow['id_role'] . "</strong>
+					  </td>
 					  <td>
 				    	<div class='input-group mb-3 justify-content-center'>
 					      <div name='edit_country'>";
@@ -75,7 +76,7 @@
 				  <tr>
 					<td colspan='4'>
 				  		<div class='collapse multi-collapse' id='multiCollapseEx" . $myrow['id'] . "'>
-				  			<table style='widht: 100%' class=\"table table-hover bg-secondary\">
+				  			<table class='table bg-secondary text-white'>
 					  			<tr>		  			
 									<td>Изменить уровень привилегий на</td>
 									<td>Изменение редактируемых стран</td>
@@ -93,14 +94,14 @@
 									    	  <div class='input-group-prepend'>
 											      <input type='hidden' name='up_priv' value='yes'>
 											      <input type='hidden' name='id' value='" . $myrow['id'] . "'>
-											      <input type='submit' name='up_privilege' class='btn btn-success rounded-right' value='применить'>
+											      <input type='submit' name='up_privilege' class='btn btn-outline-success rounded-right' value='' title='применить'>
 										      </div>
 									      </div>
 									    </form>  
 									</td>
 									<td class='d-flex justify-content-center'>
-										<button type='button' class='btn btn-outline-primary m-0 p-1' data-toggle='modal' data-target='#editCountryModal" . $myrow['id'] . "' onclick='editCountry(" . $myrow['id'] . ")'>
-											<img src='/img/icons/icons8-pencil.png' width='35px'>
+										<button type='button' class='btn btn-outline-primary m-0 p-0' data-toggle='modal' data-target='#editCountryModal" . $myrow['id'] . "' onclick='editCountry(" . $myrow['id'] . ")' title='редактировать'>
+											<img src='/img/icons/icons8-pencil.png' width='37px'>
 										</button>
 										<div class='modal fade text-dark' id='editCountryModal" . $myrow['id'] . "' tabnew_admin='-1' role='dialog' aria-labelledby='editCountryModalLabel' aria-hidden='true'>
 											<div class='modal-dialog modal-dialog-centered' role='document'>
@@ -117,7 +118,7 @@
 											    <div class='input-group-prepend'>
 													<input type='hidden' name='delete' value='yes'>
 													<input type='hidden' name='id' value='" . $myrow['id'] . "'>
-													<input type='submit' name='delete_user' class='btn btn-outline-danger rounded font-weight-bold' value='удалить'>
+													<input type='submit' name='delete_user' class='btn btn-outline-danger rounded font-weight-bold' value='' title='удалить'>
 											    </div>
 											</div>
 									    </form>  
@@ -150,7 +151,7 @@
 				        z[i].innerHTML = 'Пользователь';
 				        break;
 				    }
-				};   
+				}; 
 			  </script>";
 		echo "<script>
 				function editCountry(i){

@@ -8,8 +8,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="icon" href="../img/image/wrench.ico">
 	<title>NEW ADMIN</title>
-	<!-- Подключение Bootstrap -->
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">
+	<!-- Подключение Bootstrap 
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">-->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap/css/new/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap/css/signin.css">
 
 	<script>
@@ -48,7 +49,7 @@
 		};*/
 
 		//script for modal window in file select_data.php
-		function sendData(fileName, countryName, whatThis, whatThisId, way){
+		function sendData(fileName, countryName, whatThis, whatThisId, way) {
 			jQuery.noConflict();
 			jQuery(function(){
 				var $ = jQuery;
@@ -60,7 +61,7 @@
 						what_this: whatThis,
 						what_this_id: whatThisId					
 					},
-					async: false,
+					async: false,					
 					success: function(html){
 						$("." + way).html(html);
 					}
@@ -117,21 +118,21 @@ _END;
 				$wayEditPassword = '"editPassword-modal-box"';
 				$whatThisPassword = '"password"';
 
-				echo "<div class='row bg-dark m-0 py-3'>
+				echo "<div class='row bg-dark m-0 py-3 mw1100'>
 						<div class='col-10 d-flex justify-content-center align-items-center p-0 text-center'>
-							<a class='display-4 text-uppercase font-weight-bold text-white ml-5' href='new_admin.php'>Панель администратора</a>
+							<a class='display-4 text-uppercase font-weight-bold text-white ml-5 text-wrap text-break' href='new_admin.php'>Панель администратора</a>
 						</div>
 						<div class='col-2 d-flex justify-content-end p-0 pr-sm-3'>
 							<div class='text-white'>
-								<span class='navbar-text'>
-									Добро пожаловать, <strong class='text-white'>" . $myrow['login'] . "</strong>
+								<span class='navbar-text text-wrap text-break text-center'>
+									Добро пожаловать, <strong class='text-white text-wrap text-break'>" . $myrow['login'] . "</strong>
 								</span>
-								<div class='d-flex'>
+								<div class='d-flex justify-content-around'>
 									<form action='#' method='post' class='form-inline'>
-										<input type='button' name='editPassword' class='form-inline btn btn-warning btn-sm' value='Изменить пароль' onclick='sendData(" . $editPassword . ", null, " . $whatThisPassword . ", null, " . $wayEditPassword . ")'  data-toggle='modal' data-target='#modalEditPassword'>
+										<input type='button' name='editPassword' class='form-inline btn btn-warning btn-sm text-wrap text-break' value='' title='Изменить пароль' onclick='sendData(" . $editPassword . ", null, " . $whatThisPassword . ", null, " . $wayEditPassword . ")' data-toggle='modal' data-target='#modalEditPassword'>
 									</form>
 									<form action='../php-script/session_destroy.php' method='post' class='form-inline ml-2'>
-										<input type='submit' name='destroy' class='btn btn-warning btn-sm' value='Выход'>
+										<input type='submit' name='destroy' class='btn btn-warning btn-sm text-wrap text-break' value='' title='Выход'>
 									</form>
 								</div>
 							</div>
@@ -140,10 +141,11 @@ _END;
 
 				/* дерево стран, принадлежащие определенному пользователю */
 				$query_continent = "SELECT `table_country`.`continent_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' GROUP BY `table_country`.`continent_country`";
+
 				$result_continent = $connection -> query($query_continent);
 				if(!$result_continent) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 				else {
-						echo '<div class="row m-0">
+						echo '<div class="row m-0 mw1100">
 								<div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-2 bg-dark">
 									<div class="dropdown-divider"></div>
 									<ul class="nav flex-column text-white px-2">';
@@ -152,8 +154,12 @@ _END;
 								        $result_continent -> data_seek($n);
 								        $row_continent = $result_continent -> fetch_array(MYSQLI_NUM);//получение отдельной строки таблицы
 								        // print_r($row_continent);
-								        echo "<li class='font-weight-bold'><button class='btn btn-secondary btn-sm btn-block my-1' type='button' data-toggle='collapse' data-target='#multiCollapseEx$n' aria-expanded='false' aria-controls='multiCollapseEx$n'>" . $row_continent[0] . "</button></li><ol>";
+								        echo "<li class='font-weight-bold'>
+										        <button class='btn btn-secondary btn-sm btn-block my-1 text-wrap text-break' data-toggle='collapse' data-target='#multiCollapseEx$n' aria-expanded='false' aria-controls='multiCollapseEx$n'>" . $row_continent[0] . "</button>
+									          </li><ol>";
+
 										$query_country = "SELECT `table_country`.`name_country` FROM `table_country` JOIN `table_for_tc-tu` ft1  ON ft1.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t1  ON t1.`id` = ft1.`id_table_users` JOIN `table_for_tc-tu` ft2  ON ft2.`id_table_country` = `table_country`.`id_country` JOIN `table_users` t2  ON t2.`id` = ft2.`id_table_users` AND t2.`login` = '" . $myrow['login'] . "' AND `table_country`.`continent_country` = '" . $row_continent[0] . "' GROUP BY `table_country`.`name_country`";
+
 								        $result_country = $connection -> query($query_country);
 								        if(!$result_country) die("<div class='alert alert-danger'>Сбой при доступе к БД: " . $connection -> error . "</div>");
 								        else {
@@ -168,19 +174,19 @@ _END;
 								        		$nameCountry = "'$row_country[0]'";
 								        		$waySendNameCountry = "'info-box'";
 
-								        		echo '<li class="my-2 table__li_hover pl-1" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span>' . $row_country[0] . '</span></li>';
+								        		echo '<li class="my-2 table__li_hover pl-1" onclick="sendData(' . $whenSend . ', ' . $nameCountry . ', null, null, ' . $waySendNameCountry . ')"><span class="text-break">' . $row_country[0] . '</span></li>';
 								        	}
 								        }
 								        echo "</div></ol>";
 								    }
 
 								    $addCountry = "'addform.php'";
-								    $wayAddCountry = "'info-box'";
+								    $wayAddCountry = "'editPassword-modal-box'";
 
 								    echo '
 								    </ul>
 								    <p>
-									    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5" onclick="sendData(' . $addCountry . ', null, null, null, ' . $wayAddCountry . ')">
+									    <input type="button" name="addCountry" value="Добавить страну" class="btn btn-md btn-primary btn-block mt-5 text-wrap text-break" onclick="sendData(' . $addCountry . ', null, null, null, ' . $wayAddCountry . ')"  data-toggle="modal" data-target="#modalEditPassword">
 								    </p>';
 
 								    if($myrow['id_role'] == 1){
@@ -190,13 +196,17 @@ _END;
 
 									    echo '
 									    <p>
-										    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1" onclick="sendData(' . $tableCountry . ', null, null, null, ' . $wayTableCountry . ')">
+										    <input type="submit" name="tableUsers" value="Таблица пользователей" class="btn btn-md btn-primary btn-block mt-1 text-wrap text-break" onclick="sendData(' . $tableCountry . ', null, null, null, ' . $wayTableCountry . ')">
 									    </p>';
 									}
 
 					    echo '</div>
 						      <div class="col-9 col-sm-9 col-md-9 col-lg-9 col-xl-10 p-0 d-flex justify-content-start">							    
-									<div class="info-box container-fluid p-0"></div>
+									<div class="info-box container-fluid p-0">
+										<div class="container-fluid p-5 d-flex justify-content-center align-items-center">
+											<img src="/img/icons/givc.png" width="54.3%">
+										</div>
+									</div>
 							  </div>
 						</div>';
 
@@ -204,7 +214,7 @@ _END;
 
 				echo '<!-- Modal -->
 				<div class="modal fade" id="modalEditPassword" tabindex="-1" role="dialog" aria-labelledby="modalEditPasswordLabel" aria-hidden="true">
-					<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header bg-secondary p-1 pl-3 m-0">
 								<h5 class="modal-title text-warning font-weight-bold" id="modalEditPasswordLabel">Окно редактирования</h5>
@@ -235,9 +245,12 @@ _END;
 			}
 		}
 	
-	?>		
+	?>
+
   <script type="text/javascript" src="../css/bootstrap/js/jquery.min.js"></script>
-  <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="../css/bootstrap/js/popper.min.js"></script>
+  <!-- <script type="text/javascript" src="../css/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../css/bootstrap/js/popper.min.js"></script> -->
+  <script type="text/javascript" src="../css/bootstrap/js/new/bootstrap.min.js"></script>
+
 </body>
 </html>

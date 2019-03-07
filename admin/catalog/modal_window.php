@@ -139,7 +139,7 @@
 										<div class="input-group-prepend">
 											<label for="flag_country" class="input-group-text">Флаг</label>
 										</div>
-										<div class="form-control bg-light rounded-right text-center">
+										<div class="form-control bg-light rounded-right text-center h-100">
 											<img src="../' . $row_country_old[6] . '" width="150px" class="img-thumbnail bg-dark"></img>
 											<label class="w-75">' . $row_country_old[6] . '</label>													
 											<input type="file" name="flag_edit" class="btn btn-outline-secondary btn-sm" id="exampleFormControlFile1" value="Добавить">
@@ -154,7 +154,7 @@
 							</div>
 							<div class="d-flex justify-content-end mb-2">
 								<div class="btn-group btn-group-lg mr-5">
-									<input type="submit" name="updateDataCountry" class="btn btn-success" value="Сохранить изменения" title="сохранение внесенных изменений">
+									<input type="submit" name="updateDataCountry" class="btn btn-success" value="" title="сохранение внесенных изменений">
 								</div>
 							</div>
 						</form>
@@ -202,7 +202,7 @@
 										<div class='input-group-prepend'>
 											<label for='flag_country' class='input-group-text'>Фото</label>
 										</div>
-										<div class='form-control bg-light'>
+										<div class='form-control bg-light h-100'>
 											<img src='../$row_person_old[6]' width='150px' class='img-thumbnail bg-dark'></img>
 											<div class='w-100'>$row_person_old[6]</div>
 											<input type='text' name='user[$row_person_old[0]][old_foto]' class='input-group-text bg-light skrit' value='$row_person_old[6]' readonly>
@@ -217,7 +217,7 @@
 							</div>
 							<div class='d-flex justify-content-end mb-2'>
 								<div class='btn-group btn-group-lg mr-5'>
-									<input type='submit' name='updateDataPerson' class='btn btn-success' value='Сохранить изменения' title='сохранение внесенных изменений'>
+									<input type='submit' name='updateDataPerson' class='btn btn-success' value='' title='сохранение внесенных изменений'>
 								</div>
 							</div>
 						</form>";
@@ -249,7 +249,7 @@
 					</div>
 					<div class='d-flex justify-content-center mt-3'>
 						<div class='btn-group btn-group-sm'>
-							<input type='submit' name='updatePassword' class='btn btn-success font-weight-bold' value='Сохранить изменения' title='сохранение внесенных изменений'>
+							<input type='submit' name='updatePassword' class='btn btn-success font-weight-bold' value='' title='сохранение внесенных изменений'>
 						</div>
 					</div>
 				</form>
@@ -284,8 +284,8 @@
 								<div class='input-group-prepend'>
 									<label for='addPersonFoto' class='input-group-text'>Фото</label>
 								</div>
-								<div class='form-control bg-light'>
-									<input name='addPersonFoto' type='file' class='btn btn-outline-secondary btn-sm'>
+								<div class='form-control bg-light h-100'>
+									<input name='addPersonFoto' type='file' class='btn btn-outline-secondary btn-sm w-100'>
 								</div>
 							</div>						
 							<div class='input-group mb-3 text-center'>
@@ -296,7 +296,7 @@
 					</div>
 					<div class='d-flex justify-content-end mb-2'>
 						<div class='btn-group btn-group-lg mr-5'>
-							<input type='submit' name='addPerson' class='btn btn-success' value='Сохранить' title='сохранение внесенных изменений'>
+							<input type='submit' name='addPerson' class='btn btn-success' value='' title='сохранение внесенных изменений'>
 						</div>
 					</div>
 				</form>";

@@ -35,6 +35,7 @@
 			$continent_country = defend($_POST['continent_country']);
 			$accessory_block = defend($_POST['accessory_block']);
 			$info_about_country = defend($_POST['info_about_country']);
+
 			if(isset($_FILES['search_flag'])) {
 				// проверяем, можно ли загружать изображение
 				$check = can_upload($_FILES['search_flag']);
@@ -51,33 +52,10 @@
 				}
 	        }
 
-	        //данные по долностному лицу
-			$position_person = defend($_POST['position_person']);
-			$full_name = defend($_POST['full_name']);
-			$info_about_person = defend($_POST['info_about_person']);
-			if(isset($_FILES['search_foto'])) {
-	            // проверяем, можно ли загружать изображение
-	            $check = can_upload($_FILES['search_foto']);
-
-	            if($check === true){
-	              // загружаем изображение на сервер
-	              $full_name_photo = make_upload($_FILES['search_foto']);
-	              $foto_person =  $full_name_photo ;
-	              echo "<div class='alert alert-success'>Файл <strong>$full_name_photo</strong> успешно загружен!</div>";
-	            }
-	            else{
-	              // выводим сообщение об ошибке
-	              echo "<strong class='alert alert-danger'>$check</strong>";
-	            }
-			}
-
 			//запрос для добавления страны и данных о ней
 			$query_insert_country = "INSERT INTO table_country VALUES (NULL ,'" . $name_country . "', '" . $index_country . "', '" . $continent_country . "', '" . $accessory_block . "', '" . $info_about_country . "', '" . $flag_country . "')";
-	        if(!$result_insert_country = $connection -> query($query_insert_country)) die("Сбой при вставке данных: " . $connection -> error . "<br> Number error: " . $connection -> errno);
 
-			//запрос для добавления должностного лица и данных по нему
-	        $query_insert_person = "INSERT INTO table_persons VALUES (NULL, '" . $position_person . "', '" . $full_name . "', '" . $info_about_person . "', (SELECT table_country.id_country FROM table_country WHERE table_country.name_country = '" . $name_country . "'), 0, '" . $foto_person . "')";
-			if(!$result_insert_person = $connection -> query($query_insert_person)) die ("Сбой при вставке данных: " . $connection -> error . "<br> Number error: " . $connection -> errno);
+	        if(!$result_insert_country = $connection -> query($query_insert_country)) die("Сбой при вставке данных: " . $connection -> error . "<br> Number error: " . $connection -> errno);
 
 			//запрос для добавления данных в таблицу-связку table_for_tc-tu
 			$table = "'table_for_tc-tu'";
@@ -88,16 +66,15 @@
 			if(!$result_insert_data_admin = $connection -> query($query_insert_data_admin)) die ("Сбой при вставке данных: " . $connection -> error . "<br> Number error: " . $connection -> errno);
 
 	        echo "<div class='alert alert-success'>Запись добавлена<br></div>";
-	        echo "<script>setTimeout('location=\"../new_admin.php\"', 2000)</script>";
+	        echo "<script>setTimeout('location=\"../new_admin.php\"', 3000)</script>";
 
 		}
 
 		//обновление дынных о стране и должностных лицах
-		if ( isset($_POST['updateData']) ) {
+		/*if ( isset($_POST['updateData']) ) {
 
 			//print_r($_POST);
 		    //print_r($_FILES);
-	        /*выбор картинок*/
 	        if($_FILES['flag_edit']['name'] == ''){
 	            $flag_country = $_POST['flag_country'];
 	        }
@@ -195,13 +172,15 @@
 				}
 			}
 
-		}
+		}*/
 
 		//удаление страны и её должностных лиц
 		if ( isset($_POST['deleteData']) ) {
 			//print_r($_POST);
 
-			$name_country = defend($_POST['name_country_old']);
+			echo "delete";
+
+			/*$name_country = defend($_POST['name_country_old']);
 			$query_flag_country = "SELECT flag_country FROM table_country WHERE name_country = '$name_country'";
 
 			$query_foto_person = "SELECT foto FROM table_persons WHERE table_persons.id_country = (SELECT table_country.id_country FROM table_country WHERE table_country.name_country = '$name_country')";//запрос к БД на выбор изображений должностных лиц, страну которых удаляем
@@ -239,7 +218,7 @@
 					echo "<div class='alert alert-success'>Запись удалена</div>";
 					echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
 				}
-			}
+			}*/
 
 		}
 

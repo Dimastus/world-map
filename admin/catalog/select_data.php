@@ -82,9 +82,7 @@
 											<th>Индекс</th>
 											<th>Часть света</th>
 											<th>Блок</th>
-											<th>Информация</th>
-											<th>Редактирование</th>
-											<th>Удаление</th>
+											<th><span class="text-wrap text-break">Элементы управления</span></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -95,26 +93,24 @@
 											<td><span class="text-light">' . $continent_country . '</span></td>
 											<td><span class="text-light">' . $block_country . '</span></td>
 											<td>
-												<button class="btn btn-outline-success btn-sm" type="button" data-toggle="collapse" data-target="#multiCollapseInformation" aria-expanded="false" aria-controls="multiCollapseInformation">												
+												<button class="btn btn-outline-success btn-sm p-0" type="button" data-toggle="collapse" data-target="#multiCollapseInformation" aria-expanded="false" aria-controls="multiCollapseInformation" title="просмотр информации">
 													<img src="' . $way_to_icon . 'icons8-information.png" width="35px">
 												</button>
-											</td>
-											<td>
+
 												<!-- Button trigger modal -->
-												<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#exampleModal" onclick="sendData(' . $modalWindow_country . ', null, ' . $whatThis_country . ', ' . $whatThisId_country . ', ' . $way_country . ')">
+												<button type="button" class="btn btn-outline-primary btn-sm p-0" data-toggle="modal" data-target="#exampleModal" onclick="sendData(' . $modalWindow_country . ', null, ' . $whatThis_country . ', ' . $whatThisId_country . ', ' . $way_country . ')" title="редактирование данных о стране">
 														<img src="' . $way_to_icon . 'icons8-pencil.png" width="35px">
 												</button>
-											</td>
-											<td>
+
 												<input type="hidden" name="name_country_old" value="' . $name_country .'">
-												<input type="submit" name="deleteData" class="btn btn-outline-danger btn-sm" value="Удалить" title="удаление страны и её должностных лиц">
+												<input type="submit" name="deleteData" class="btn btn-outline-danger btn-sm p-0" value="" title="удаление страны и её должностных лиц">
 											</td>
 										</tr>
 										<tr>                
 											<td colspan="8">
 												<div class="collapse multi-collapse" id="multiCollapseInformation">
 													<div class="bg-dark">
-														<article class="form-control text-left" aria-label="With textarea" placeholder="Информация">' . $info_about_country . '</article>
+														<article class="bg-light text-left text-dark p-2" aria-label="With textarea" placeholder="Информация">' . $info_about_country . '</article>
 													</div>
 												</div>
 											</td>
@@ -166,14 +162,14 @@
 										<div class='col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 border border-light p-0'>
 											<div class='container p-1'>
 												<div class='row m-0 p-0'>
-													<div class='col-3 p-1'>
+													<div class='col-3 p-1 text-center'>
 														<img src='../$row_person_old[6]' width='150px' class='img-thumbnail bg-dark'></img>
 													</div>
 													<div class='col-8 text-left text-light p-1'>
 														<div><span class='font-weight-bold mr-2'>Должность:</span> $position_person</div>
 														<div><span class='font-weight-bold mr-2'>ФИО:</span> $full_name</div>
 														<div><span class='font-weight-bold'>Информация:</span></div>
-														<article id='infoAboutPerson$row_person_old[0]' name='user[$row_person_old[0]][reference_info]' class='text-up-admin'><div class='pl-4'>$reference_info</div></article>
+														<article id='infoAboutPerson$row_person_old[0]' name='user[$row_person_old[0]][reference_info]' class='text-up-admin'><div class='px-3 text-justify'>$reference_info</div></article>
 													</div>
 													<div class='col-1 p-0'>
 														<div class='d-block my-1'>
@@ -239,7 +235,7 @@
 							btn.innerHTML = \"<img src='../../img/icons/icons8-arrow-down.png' width='35px'>\";
 						    btn.setAttribute('title', 'показать больше информации');
 						  }
-						}
+						};
 					</script>";
 			}
 		}

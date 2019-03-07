@@ -2,7 +2,7 @@
 
 	session_start();
 
-	if($_SESSION['login']=='') {
+	if($_SESSION['login'] == '') {
 
 		echo ' 
 			<link rel="stylesheet" type="text/css" href="/css/bootstrap/css/bootstrap.min.css">
@@ -12,7 +12,7 @@
 		echo '<script>setTimeout(\'location="../new_admin.php"\', 2000)</script>';
 
 	}
-	elseif ($_SESSION['login']==true && ($_SESSION['id_role']==1 || $_SESSION['id_role']==2)) {
+	elseif ( $_SESSION['login'] == true && ($_SESSION['id_role'] == 1 || $_SESSION['id_role'] == 2) ) {
 
 		$way = '../../php-script/';		//часть пути для подключения файлов
 		
@@ -33,7 +33,7 @@
 			  </div>
 			  <div class="modal-body" style="width: 100%; overflow-y: scroll; height: 40vh">';
 
-			echo "<table class='table table-hover'>
+			echo "<table class='table'>
 					<thead>
 						<tr>
 							<th>Страна</th>
@@ -60,7 +60,7 @@
 													<input type="hidden" name="delete" value="yes">
 													<input type="hidden" name="id_user" value=' . $code . '>
 													<input type="hidden" name="id_edit_country" value=' . $row_edit_country[0] . '>
-													<input type="submit" name="del_edit_country" class="btn btn-danger btn-sm rounded" value="Удалить">
+													<input type="submit" name="del_edit_country" class="btn btn-outline-danger btn-sm rounded" value="" title="удалить">
 											    </div>
 											</div>
 									    </form> 
@@ -91,7 +91,7 @@
 					    <div class='input-group-prepend'>
 							<input type='hidden' name='add' value='yes'>
 							<input type='hidden' name='id_user' value='" . $code . "'>
-							<input type='submit' name='add_edit_country' class='btn btn-success rounded-right' value='добавить'>
+							<input type='submit' name='add_edit_country' class='btn btn-outline-success rounded-right' value='' title='добавить'>
 					    </div>
 					</div>
 				</form> ";
